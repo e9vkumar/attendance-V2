@@ -21,7 +21,7 @@
   <style>
     .main-page {
       display: grid;
-      grid-template-columns: 2fr 10fr;
+      /* grid-template-columns: 2fr 10fr; */
     }
 
     .sidebar-main {
@@ -56,7 +56,6 @@
       display: flex;
       margin-top: 10px;
       align-items: center;
-      gap: -1px;
     }
 
     .bi-x {
@@ -99,15 +98,33 @@
       gap: 10px;
     }
 
-    .dropdown-menu{
+    .icon-legend{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dropdown-toggle.btn-secondary{
       background-color: black;
     }
-    /* .emp-name{
-        align-items: center;
-    } */
+
+    @media screen  and (max-width: 1080px){
+      .past{
+        display: none;
+      }
+      .future{
+        display: none;
+      }
+      .sidebar-main{
+        display: none;
+      }
+      .row-header, .data-row{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   </style>
   <div class="main-page">
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bg-dark sidebar-main">
+    <!-- <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bg-dark sidebar-main">
       <a href="/"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none name-and-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle"
@@ -139,12 +156,12 @@
         </li>
       </ul>
       <hr>
-    </div>
+    </div> -->
     <div class="page-content">
       <div class="top-header">
         <h1>Attendance Manager</h1>
         <div class="name-and-icon">
-          <p>PERSON NAME</p>
+          <p>{{user}}</p>
           <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -156,12 +173,12 @@
               </svg>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li><a class="dropdown-item" href="{% url 'app_V2:logout' %}">Sign out</a></li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="d-container button-edit">
+      <!-- <div class="d-container button-edit">
         <nav class="d-flex justify-content-end">
           <button class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="modal"
             data-bs-target="#markModal" type="button">
@@ -171,6 +188,42 @@
             </svg>
           </button>
         </nav>
+      </div> -->
+      <div class="icon-legend">
+          <dd>
+          <dt>PRESENT</dt>
+          <dl>
+            <svg xmlns="http://www.w3.org/2000/svg" data-date="{{i.date}}" data-employee="{{item.employee}}"
+            width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
+            <path
+              d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+            <path
+              d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+          </svg>
+        </dl>
+          <dt>LATE</dt>
+          <dl>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+                  data-date="{{i.date}}" data-employee="{{item.employee}}" viewBox="0 0 16 16">
+                  <path
+                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                </svg>
+          </dl>
+          <dt>SICK</dt>
+          <dl>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-virus" viewBox="0 0 16 16">
+            <path d="M8 0a1 1 0 0 1 1 1v1.402c0 .511.677.693.933.25l.7-1.214a1 1 0 0 1 1.733 1l-.701 1.214c-.256.443.24.939.683.683l1.214-.701a1 1 0 0 1 1 1.732l-1.214.701c-.443.256-.262.933.25.933H15a1 1 0 1 1 0 2h-1.402c-.512 0-.693.677-.25.933l1.214.701a1 1 0 1 1-1 1.732l-1.214-.7c-.443-.257-.939.24-.683.682l.701 1.214a1 1 0 1 1-1.732 1l-.701-1.214c-.256-.443-.933-.262-.933.25V15a1 1 0 1 1-2 0v-1.402c0-.512-.677-.693-.933-.25l-.701 1.214a1 1 0 0 1-1.732-1l.7-1.214c.257-.443-.24-.939-.682-.683l-1.214.701a1 1 0 1 1-1-1.732l1.214-.701c.443-.256.261-.933-.25-.933H1a1 1 0 1 1 0-2h1.402c.511 0 .693-.677.25-.933l-1.214-.701a1 1 0 1 1 1-1.732l1.214.701c.443.256.939-.24.683-.683l-.701-1.214a1 1 0 0 1 1.732-1l.701 1.214c.256.443.933.261.933-.25V1a1 1 0 0 1 1-1m2 5a1 1 0 1 0-2 0 1 1 0 0 0 2 0M6 7a1 1 0 1 0-2 0 1 1 0 0 0 2 0m1 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m5-3a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+          </svg>
+        </dl>
+          <dt>VACATION</dt>
+          <dl>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-suitcase-lg" viewBox="0 0 16 16">
+                  <path
+                    d="M5 2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2h3.5A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5H14a.5.5 0 0 1-1 0H3a.5.5 0 0 1-1 0h-.5A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2zm1 0h4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1M1.5 3a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5H3V3zM15 12.5v-9a.5.5 0 0 0-.5-.5H13v10h1.5a.5.5 0 0 0 .5-.5m-3 .5V3H4v10z" />
+                </svg>
+          </dl>
+        </dd>
       </div>
       <div class="table-main">
         <div class="row row-header">
@@ -178,11 +231,11 @@
           <div class="col-11">
             <div class="row no-gutters date-header">
               {% for date in past_dates %}
-              <div class="past col-1 text-center">{{date}}</div>
+              <div class="past col-1 text-center past">{{date}}</div>
               {% endfor %}
               <div class="today  col-1 text-center bg-success">{{today}}</div>
               {% for date in future_dates %}
-              <div class="past col-1 text-center">{{date}}</div>
+              <div class="past col-1 text-center future">{{date}}</div>
               {% endfor %}
             </div>
           </div>
@@ -191,7 +244,7 @@
         <div class="row data-row">
           <div class="col-1 mt-10px">{{item.employee}}</div>
           {% for i in item.past_status %}
-          <div class="col-1  text-center mt-10">
+          <div class="col-1  text-center mt-10 past">
             <div class="dropdown select-area">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -224,7 +277,7 @@
               </button>
               <ul class="dropdown-menu">
                 {% for option in options %}
-                <li><a class="dropdown-item rounded-2">{{option}}</a></li>
+                <li><a class="dropdown-item rounded-2" value="{{option}}" data-name="{{item.employee}}" data-date="{{i.date}}">{{option}}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -265,7 +318,7 @@
               </button>
               <ul class="dropdown-menu" >
                 {% for option in options %}
-                <li><a class="dropdown-item rounded-2" onchange="handleChange()" data-name="{{item.employee}}" data-date="{{i.date}}">{{option}}</a></li>
+                <li><a class="dropdown-item rounded-2" value="{{option}}" data-name="{{item.employee}}" data-date="{{today}}">{{option}}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -274,7 +327,7 @@
 
 
           {% for i in item.future_status %}
-          <div class="col-1  text-center mt-10px">
+          <div class="col-1  text-center mt-10px future">
             <div class="dropdown select-area">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -307,7 +360,7 @@
               </button>
               <ul class="dropdown-menu">
                 {% for option in options %}
-                <li><a class="dropdown-item rounded-2" data-name="{{item.employee}}" data-date="{{i.date}}">{{option}}</a></li>
+                <li><a class="dropdown-item rounded-2" value="{{option}}" data-name="{{item.employee}}" data-date="{{i.date}}">{{option}}</a></li>
                 {% endfor %}
               </ul>
             </div>
@@ -318,26 +371,38 @@
         {% endfor %}
       </div>
       <script>
-        // $('#select_all').click(function () {
-        //   $('#employee_selector option').prop('selected', true);
-        // });
-          function handleChange(name,date,status){
-            console.log("function fired!");
-            $.ajax({
-              url:"{% url 'app_V2:edit' %}",
-              type:'POST',
-              data:{
-                'name':name,
-                'date':date,
-                'status':status
-              },
-              success: function(data){
-                if(data.success){
-                  location.reload();
-                }
-              }
-            })
-          }
+            $(document).ready(function(){
+              $('.dropdown-item').on('click', function(){
+                console.log("i was fired!");
+                  var status = $(this).attr('value');
+                  var date = $(this).attr('data-date');
+                  var name = $(this).attr('data-name');
+                  // console.log(this);
+                  // console.log(status,name,date);
+                  $.ajax({
+                      url: "{% url 'app_V2:edit' %}",
+                      method: "POST",
+                      data: {
+                          'date': date,
+                          'status': status,
+                          'name':name,
+                          'csrfmiddlewaretoken': '{{ csrf_token }}'
+                      },
+                      // success: function(response) {
+                      //   console.log(response);
+                      //     if (response.success) {
+                      //         alert('Record updated successfully');
+                      //         location.reload();
+                      //     } else {
+                      //         alert('Error updating record: ' + response.message);
+                      //     }
+                      // },
+                      // error: function() {
+                      //     alert('An error occurred');
+                      // }
+              });
+              });
+          });
       </script>
 </body>
 
