@@ -52,19 +52,19 @@
       gap: 20px;
     }
 
-    .data-row {
+    /* .data-row {
       display: flex;
       margin-top: 10px;
       align-items: center;
-    }
+    } */
 
-    .bi-x {
+    /* .bi-x {
       color: red;
     }
 
     .bi-check-square {
       color: green;
-    }
+    } */
 
     .bg-success>svg {
       color: black;
@@ -82,7 +82,7 @@
       justify-content: flex-end;
     }
 
-    #editForm {
+    /* #editForm {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -96,32 +96,22 @@
     .date-header {
       display: flex;
       gap: 10px;
-    }
+    } */
 
     .icon-legend{
       display: flex;
       justify-content: space-between;
     }
 
-    .dropdown-toggle.btn-secondary{
-      background-color: black;
+    /* .dropdown-toggle.btn-secondary{
+      background-color: white;
+    } */
+
+    svg{
+      color: black;
     }
 
-    @media screen  and (max-width: 1080px){
-      .past{
-        display: none;
-      }
-      .future{
-        display: none;
-      }
-      .sidebar-main{
-        display: none;
-      }
-      .row-header, .data-row{
-        display: flex;
-        justify-content: space-between;
-      }
-    }
+
   </style>
   <div class="main-page">
     <!-- <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bg-dark sidebar-main">
@@ -226,9 +216,16 @@
         </dd>
       </div>
       <div class="table-main">
-        <div class="row row-header">
-          <div class="col-1 container">Employee Name</div>
-          <div class="col-11">
+        <div class="row row-header mb-2">
+          <div class="col">Employee Name</div>
+          {% for date in past_dates %}
+          <div class="col d-none d-xl-block">{{date}}</div>
+          {% endfor %}
+          <div class="today  col text-center bg-success">{{today}}</div>
+          {% for date in future_dates %}
+          <div class="col d-none d-xl-block">{{date}}</div>
+          {% endfor %}
+          <!-- <div class="col-11">
             <div class="row no-gutters date-header">
               {% for date in past_dates %}
               <div class="past col-1 text-center past">{{date}}</div>
@@ -238,15 +235,15 @@
               <div class="past col-1 text-center future">{{date}}</div>
               {% endfor %}
             </div>
-          </div>
+          </div> -->
         </div>
         {% for item in data %}
-        <div class="row data-row">
-          <div class="col-1 mt-10px">{{item.employee}}</div>
+        <div class="row">
+          <div class="col mt-2 justify-content-center">{{item.employee}}</div>
           {% for i in item.past_status %}
-          <div class="col-1  text-center mt-10 past">
+          <div class="col d-none d-xl-block text-center mt-2">
             <div class="dropdown select-area">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 {% if i.status == 'present' %}
                 <svg xmlns="http://www.w3.org/2000/svg" data-date="{{i.date}}" data-employee="{{item.employee}}"
@@ -286,9 +283,9 @@
 
 
            {% if item.today %} 
-          <div class="col-1  text-center mt-20px">
+          <div class="col-1  text-center mt-2 align-items-center justify-content-center">
             <div class="dropdown select-area center-block">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              <button class="btn btn-success dropdown-toggle" type="submit" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 {% if item.today == 'present' %}
                 <svg xmlns="http://www.w3.org/2000/svg" data-date="{{item.date}}" data-employee="{{item.employee}}"
@@ -327,9 +324,9 @@
 
 
           {% for i in item.future_status %}
-          <div class="col-1  text-center mt-10px future">
+          <div class="col d-none d-xl-block text-center mt-2">
             <div class="dropdown select-area">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+              <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 {% if i.status == 'present' %}
                 <svg xmlns="http://www.w3.org/2000/svg" 

@@ -5,10 +5,8 @@ import datetime
 from dateutil import parser
 from .models import AttendanceRecord,userModel,statusclass
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate,login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import logout
 
 # Create your views here.
 
@@ -63,8 +61,7 @@ class Mainview(LoginRequiredMixin,TemplateView):
         # print(data)
         return context
     
-    def editEntries(request):
-        if request.method == "POST":
+    def post(self,request):
             name,date,status = request.POST.get("name"),request.POST.get("date"),request.POST.get("status")
             date = parser.parse(date)
             name_id = userModel.objects.get(name=name).id
@@ -85,9 +82,7 @@ class LoginView(TemplateView):
         user = authenticate(request,username=username,password=password)
         if user is not None:
             form = login(request,user)
-            return redirect("app_V2:home")
-                
-            
+            return redirect("app_V2:home")    
         return render(request=request,template_name=self.template_name)
 
 
